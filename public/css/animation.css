@@ -1,0 +1,287 @@
+/* ============================================================
+   IDM TÉRMICAS — ANIMATIONS.CSS
+   Animaciones avanzadas personalizadas
+   ============================================================ */
+
+/* ─── Keyframes base ─── */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+@keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(40px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+@keyframes fadeInDown {
+    from { opacity: 0; transform: translateY(-40px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+@keyframes fadeInLeft {
+    from { opacity: 0; transform: translateX(-60px); }
+    to { opacity: 1; transform: translateX(0); }
+}
+@keyframes fadeInRight {
+    from { opacity: 0; transform: translateX(60px); }
+    to { opacity: 1; transform: translateX(0); }
+}
+@keyframes zoomIn {
+    from { opacity: 0; transform: scale(.85); }
+    to { opacity: 1; transform: scale(1); }
+}
+@keyframes zoomOut {
+    from { opacity: 0; transform: scale(1.15); }
+    to { opacity: 1; transform: scale(1); }
+}
+@keyframes rotateIn {
+    from { opacity: 0; transform: rotate(-8deg) scale(.9); }
+    to { opacity: 1; transform: rotate(0) scale(1); }
+}
+@keyframes flipInX {
+    from { opacity: 0; transform: perspective(400px) rotateX(60deg); }
+    to { opacity: 1; transform: perspective(400px) rotateX(0); }
+}
+@keyframes slideInUp {
+    from { opacity: 0; transform: translateY(60px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+@keyframes slideInLeft {
+    from { opacity: 0; transform: translateX(-50px); }
+    to { opacity: 1; transform: translateX(0); }
+}
+@keyframes bounceIn {
+    0%   { opacity: 0; transform: scale(.3); }
+    50%  { opacity: 1; transform: scale(1.05); }
+    70%  { transform: scale(.95); }
+    100% { transform: scale(1); }
+}
+
+/* ─── Shimmer effect (brillo deslizante) ─── */
+@keyframes shimmer {
+    0%   { background-position: -1000px 0; }
+    100% { background-position: 1000px 0; }
+}
+
+/* ─── Pulso suave ─── */
+@keyframes pulse {
+    0%, 100% { transform: scale(1); opacity: 1; }
+    50%      { transform: scale(1.05); opacity: .85; }
+}
+
+/* ─── Float (flotación) ─── */
+@keyframes float {
+    0%, 100% { transform: translateY(0px); }
+    50%      { transform: translateY(-12px); }
+}
+@keyframes floatSlow {
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    50%      { transform: translateY(-20px) rotate(3deg); }
+}
+
+/* ─── Shake ─── */
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25%      { transform: translateX(-6px); }
+    75%      { transform: translateX(6px); }
+}
+
+/* ─── Text reveal (caracteres) ─── */
+@keyframes textReveal {
+    from { clip-path: inset(0 100% 0 0); }
+    to   { clip-path: inset(0 0 0 0); }
+}
+
+/* ─── Gradient shift ─── */
+@keyframes gradientShift {
+    0%, 100% { background-position: 0% 50%; }
+    50%      { background-position: 100% 50%; }
+}
+
+/* ─── Rotate continuous ─── */
+@keyframes spinSlow {
+    from { transform: rotate(0deg); }
+    to   { transform: rotate(360deg); }
+}
+
+/* ─── Scale pulse glow ─── */
+@keyframes glowPulse {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(225, 22, 27, 0); }
+    50%      { box-shadow: 0 0 30px 8px rgba(225, 22, 27, .35); }
+}
+
+/* ─── Border draw ─── */
+@keyframes borderDraw {
+    from { width: 0; }
+    to   { width: 60px; }
+}
+
+/* ─── Marquee (slider infinito) ─── */
+@keyframes marquee {
+    from { transform: translateX(0); }
+    to   { transform: translateX(-50%); }
+}
+
+/* ═══════════════════════════════════════════════════════════
+   Clases utility para usar con IntersectionObserver
+   ═══════════════════════════════════════════════════════════ */
+.reveal {
+    opacity: 0;
+    transition: opacity 1s cubic-bezier(.25,.8,.25,1),
+                transform 1s cubic-bezier(.25,.8,.25,1);
+    will-change: transform, opacity;
+}
+.reveal-fade-up    { transform: translateY(60px); }
+.reveal-fade-down  { transform: translateY(-60px); }
+.reveal-fade-left  { transform: translateX(80px); }
+.reveal-fade-right { transform: translateX(-80px); }
+.reveal-zoom-in    { transform: scale(.85); }
+.reveal-zoom-out   { transform: scale(1.15); }
+.reveal-rotate     { transform: rotate(-6deg) scale(.9); }
+.reveal-flip       { transform: perspective(600px) rotateX(45deg); }
+.reveal.is-visible {
+    opacity: 1;
+    transform: translate(0) scale(1) rotate(0);
+}
+
+/* ═══════════════════════════════════════════════════════════
+   Efectos de texto
+   ═══════════════════════════════════════════════════════════ */
+.idm-text-shine {
+    background: linear-gradient(90deg,
+        var(--idm-white) 0%,
+        #ffb0b2 25%,
+        var(--idm-white) 50%,
+        #ffb0b2 75%,
+        var(--idm-white) 100%);
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: shimmer 4s linear infinite;
+}
+
+.idm-text-gradient {
+    background: linear-gradient(135deg, var(--idm-red) 0%, #ff5257 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-weight: 800;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   Efectos de imagen / hover avanzado
+   ═══════════════════════════════════════════════════════════ */
+.idm-img-zoom {
+    overflow: hidden;
+    position: relative;
+}
+.idm-img-zoom img {
+    transition: transform .8s cubic-bezier(.25,.8,.25,1);
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+.idm-img-zoom:hover img {
+    transform: scale(1.08);
+}
+.idm-img-zoom::after {
+    content: '';
+    position: absolute; inset: 0;
+    background: linear-gradient(180deg, transparent 40%, rgba(0,0,0,.5) 100%);
+    opacity: 0;
+    transition: opacity .4s ease;
+    pointer-events: none;
+}
+.idm-img-zoom:hover::after { opacity: 1; }
+
+/* Reveal overlay (banda que se desliza al aparecer) ─── */
+.idm-img-reveal { position: relative; overflow: hidden; }
+.idm-img-reveal::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--idm-red);
+    transform: scaleX(1);
+    transform-origin: right;
+    z-index: 3;
+    transition: transform .9s cubic-bezier(.77,0,.18,1);
+}
+.idm-img-reveal.is-visible::before {
+    transform: scaleX(0);
+}
+
+/* ═══════════════════════════════════════════════════════════
+   Cursor / hover effects
+   ═══════════════════════════════════════════════════════════ */
+.idm-hover-lift {
+    transition: transform .4s cubic-bezier(.25,.8,.25,1),
+                box-shadow .4s cubic-bezier(.25,.8,.25,1);
+}
+.idm-hover-lift:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 24px 60px rgba(0,0,0,.15);
+}
+
+.idm-hover-glow {
+    transition: box-shadow .4s ease;
+}
+.idm-hover-glow:hover {
+    box-shadow: 0 0 0 4px rgba(225,22,27,.15), 0 20px 50px rgba(225,22,27,.25);
+}
+
+/* Efecto tilt 3D */
+.idm-tilt {
+    transition: transform .5s cubic-bezier(.25,.8,.25,1);
+    transform-style: preserve-3d;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   Botones con efectos
+   ═══════════════════════════════════════════════════════════ */
+.idm-btn-shine {
+    position: relative;
+    overflow: hidden;
+}
+.idm-btn-shine::before {
+    content: '';
+    position: absolute;
+    top: 0; left: -100%;
+    width: 100%; height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,.35), transparent);
+    transition: left .7s ease;
+}
+.idm-btn-shine:hover::before { left: 100%; }
+
+/* ═══════════════════════════════════════════════════════════
+   Divisores decorativos
+   ═══════════════════════════════════════════════════════════ */
+.idm-wave-divider {
+    position: relative;
+    height: 80px;
+    overflow: hidden;
+    line-height: 0;
+}
+.idm-wave-divider svg {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    bottom: 0;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   Loader / spinners
+   ═══════════════════════════════════════════════════════════ */
+@keyframes ringPulse {
+    0%   { transform: scale(0); opacity: 1; }
+    100% { transform: scale(2); opacity: 0; }
+}
+.idm-ring::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border: 2px solid var(--idm-red);
+    border-radius: 50%;
+    animation: ringPulse 2s ease-out infinite;
+}
+

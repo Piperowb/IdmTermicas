@@ -1,0 +1,35 @@
+Options -Indexes
+RewriteEngine On
+
+# ── En producción NO hay RewriteBase porque está en public_html raíz ──
+# RewriteBase /   ← no hace falta, pero puedes dejarlo si quieres
+
+# No reescribir archivos o carpetas reales
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+
+# Todo al front controller
+RewriteRule ^(.*)$ index.php [QSA,L]
+
+# ── Redirects 301 desde URLs antiguas de WordPress ──
+Redirect 301 /about-us /nosotros
+Redirect 301 /about-us/ /nosotros
+
+# ── Forzar HTTPS ──
+RewriteCond %{HTTPS} off
+RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+# ── Seguridad ──
+<IfModule mod_headers.c>
+    Header set X-Frame-Options "SAMEORIGIN"
+    Header set X-Content-Type-Options "nosniff"
+    Header set X-XSS-Protection "1; mode=block"
+</IfModule>
+
+# ── Cache para assets estáticos ──
+<FilesMatch "\.(css|js|png|jpg|jpeg|gif|ico|woff2?)$">
+    <IfModule mod_expires.c>
+        ExpiresActive On
+        ExpiresDefault "access plus 1 month"
+    </IfModule>
+</FilesMatch>
