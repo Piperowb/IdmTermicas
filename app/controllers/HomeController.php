@@ -44,45 +44,123 @@ class HomeController extends Controller
     }
 
     public function enviarContacto(): void
-{
-    if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-        $this->redirect('/contacto');
-        return;
+    {
+        if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+            $this->redirect('/contacto');
+            return;
+        }
+
+        $nombre  = trim(htmlspecialchars($_POST['nombre']  ?? ''));
+        $email   = trim(htmlspecialchars($_POST['email']   ?? ''));
+        $asunto  = trim(htmlspecialchars($_POST['asunto']  ?? ''));
+        $mensaje = trim(htmlspecialchars($_POST['mensaje'] ?? ''));
+
+        if (!$nombre || !$email || !$mensaje || !filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            $this->redirect('/contacto?error=campos');
+            return;
+        }
+
+        try {
+            $pdo  = Database::get();
+            $stmt = $pdo->prepare('
+                INSERT INTO idm_contactos (nombre, email, asunto, mensaje, ip)
+                VALUES (:nombre, :email, :asunto, :mensaje, :ip)
+            ');
+            $stmt->execute([
+                ':nombre'  => $nombre,
+                ':email'   => $email,
+                ':asunto'  => $asunto ?: null,
+                ':mensaje' => $mensaje,
+                ':ip'      => $_SERVER['REMOTE_ADDR'] ?? null,
+            ]);
+        } catch (Exception $e) {
+            error_log('IDM BD error: ' . $e->getMessage());
+            $this->redirect('/contacto?error=servidor');
+            return;
+        }
+
+        try {
+        require_once ROOT . '/vendor/autoload.php';
+
+            $mail = new PHPMailer\PHPMailer\PHPMailer(true);
+
+            $mail->isSMTP();
+            $mail->Host       = MAIL_HOST;
+            $mail->SMTPAuth   = true;
+            $mail->Username   = MAIL_USER;
+            $mail->Password   = MAIL_PASS;
+            $mail->SMTPSecure = PHPMailer\PHPMailer\PHPMailer::ENCRYPTION_SMTPS;
+            $mail->Port       = MAIL_PORT;
+            $mail->CharSet    = 'UTF-8';
+
+            $mail->setFrom(MAIL_FROM, MAIL_FROM_NAME);
+            $mail->addAddress(SITE_EMAIL);   
+            $mail->addReplyTo($email, $nombre);
+
+            $mail->isHTML(true);
+            $mail->Subject = $asunto
+                ? "Contacto web: {$asunto}"
+                : "Nuevo mensaje de {$nombre} — IDM Térmicas";
+
+            $mail->Body = "
+                <div style='font-family:Arial,sans-serif;max-width:600px;margin:0 auto;'>
+                    <div style='background:#e1161b;padding:24px;text-align:center;'>
+                        <h2 style='color:#fff;margin:0;'>Nuevo mensaje de contacto</h2>
+                        <p style='color:rgba(255,255,255,.8);margin:6px 0 0;'>IDM Térmicas — Sitio Web</p>
+                    </div>
+                    <div style='padding:32px;background:#f9f9f9;border:1px solid #eee;'>
+                        <table style='width:100%;border-collapse:collapse;'>
+                            <tr>
+                                <td style='padding:10px 0;color:#666;width:120px;'><strong>Nombre:</strong></td>
+                                <td style='padding:10px 0;color:#222;'>{$nombre}</td>
+                            </tr>
+                            <tr style='background:#fff;'>
+                                <td style='padding:10px 0;color:#666;'><strong>Email:</strong></td>
+                                <td style='padding:10px 0;'>
+                                    <a href='mailto:{$email}' style='color:#e1161b;'>{$email}</a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style='padding:10px 0;color:#666;'><strong>Asunto:</strong></td>
+                                <td style='padding:10px 0;color:#222;'>" . ($asunto ?: 'Sin asunto') . "</td>
+                            </tr>
+                        </table>
+                        <div style='margin-top:20px;padding:20px;background:#fff;
+                                    border-left:4px solid #e1161b;border-radius:4px;'>
+                            <p style='color:#666;margin:0 0 8px;font-size:12px;
+                                    text-transform:uppercase;letter-spacing:1px;'>
+                                <strong>Mensaje:</strong>
+                            </p>
+                            <p style='color:#222;line-height:1.7;margin:0;'>
+                                " . nl2br($mensaje) . "
+                            </p>
+                        </div>
+                        <div style='margin-top:24px;padding:16px;background:#e8f4fd;
+                                    border-radius:8px;text-align:center;'>
+                            <p style='margin:0;color:#666;font-size:13px;'>
+                                Para responder, haz clic en <strong>Responder</strong> en tu correo
+                                — el mensaje llegará directo a <strong>{$email}</strong>
+                            </p>
+                        </div>
+                    </div>
+                    <div style='padding:16px;text-align:center;background:#222;'>
+                        <p style='color:#888;font-size:12px;margin:0;'>
+                            IDM Térmicas S.A.S — Cali, Colombia
+                        </p>
+                    </div>
+                </div>
+            ";
+
+            $mail->AltBody = "Nombre: {$nombre}\nEmail: {$email}\nAsunto: {$asunto}\n\nMensaje:\n{$mensaje}";
+
+            $mail->send();
+
+        } catch (Exception $e) {
+            error_log('IDM Mail error: ' . $e->getMessage());
+        }
+
+        $this->redirect('/contacto?ok=1');
     }
-
-    // ── DEBUG TEMPORAL — quitar en producción ──
-    ini_set('display_errors', 1);
-    error_reporting(E_ALL);
-    // ──────────────────────────────────────────
-
-    $nombre  = trim(htmlspecialchars($_POST['nombre']  ?? ''));
-    $email   = trim(htmlspecialchars($_POST['email']   ?? ''));
-    $asunto  = trim(htmlspecialchars($_POST['asunto']  ?? ''));
-    $mensaje = trim(htmlspecialchars($_POST['mensaje'] ?? ''));
-
-
-    try {
-        $pdo = Database::get();
-        $stmt = $pdo->prepare('
-            INSERT INTO idm_contactos (nombre, email, asunto, mensaje, ip)
-            VALUES (:nombre, :email, :asunto, :mensaje, :ip)
-        ');
-        $stmt->execute([
-            ':nombre'  => $nombre,
-            ':email'   => $email,
-            ':asunto'  => $asunto ?: null,
-            ':mensaje' => $mensaje,
-            ':ip'      => $_SERVER['REMOTE_ADDR'] ?? null,
-        ]);
-
-        // ── DEBUG: confirmar inserción ──
-        die(json_encode(['ok' => true, 'id' => $pdo->lastInsertId()]));
-
-    } catch (Exception $e) {
-        // ── DEBUG: ver el error exacto ──
-        die(json_encode(['error' => 'bd', 'mensaje' => $e->getMessage()]));
-    }
-}
 
     public function consultoria(): void {
         $data = [

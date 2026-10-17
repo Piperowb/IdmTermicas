@@ -20,3 +20,11 @@ define('DB_NAME',    'idmtermi_db');
 define('DB_USER',    'idmtermi_admin');
 define('DB_PASS',    'idmtermicas123#');
 define('DB_CHARSET', 'utf8mb4');
+
+// ── Correo SMTP — en local no envía, solo loguea el error ──
+define('MAIL_HOST',      'mail.idmtermicas.com');
+define('MAIL_USER',      'pbocanegra@idmtermicas.com');
+define('MAIL_PASS',      '.CH9%w@0WMEODx6(');
+define('MAIL_PORT',      465);
+define('MAIL_FROM',      'pbocanegra@idmtermicas.com');
+define('MAIL_FROM_NAME', 'IDM Térmicas');
