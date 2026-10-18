@@ -154,7 +154,7 @@
                             <div class="idm-footer-contact-icon"><i class="bi bi-geo-alt-fill"></i></div>
                             <div class="idm-footer-contact-body">
                                 <span class="idm-footer-contact-label">Dirección</span>
-                                <span><?= SITE_ADDRESS ?></span>
+                                <a href="https://maps.google.com/?q=<?= urlencode(SITE_ADDRESS) ?>" target="_blank" rel="noopener noreferrer"><?= SITE_ADDRESS ?></a>
                             </div>
                         </li>
                     </ul>

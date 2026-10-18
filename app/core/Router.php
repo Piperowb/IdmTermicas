@@ -55,6 +55,13 @@ class Router
     private function notFound(): void
     {
         http_response_code(404);
+        if (defined('VIEWS_PATH') && defined('SITE_URL')) {
+            $content = VIEWS_PATH . '/pages/404.php';
+            if (file_exists($content)) {
+                require_once VIEWS_PATH . '/layout.php';
+                return;
+            }
+        }
         echo '<h1>404 - Página no encontrada</h1>';
     }
 }

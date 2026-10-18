@@ -666,33 +666,37 @@ p { margin: 0 0 15px; }
     transition: transform 1s cubic-bezier(.25, .8, .25, 1);
 }
 
-/* Overlay oscuro con degradado para que se lea el texto */
-.idm-service-card-header-overlay {
-    position: absolute;
-    inset: 0;
-    z-index: 1;
-    /* Imagen casi limpia arriba, oscurecimiento solo en la parte baja */
-    background: linear-gradient(180deg,
-        rgba(0, 0, 0, 0) 0%,
-        rgba(0, 0, 0, 0.05) 35%,
-        rgba(0, 0, 0, 0.25) 55%,
-        rgba(0, 0, 0, 0.75) 80%,
-        rgba(0, 0, 0, 0.92) 100%);
-    transition: background .5s ease;
-    pointer-events: none;
+/* Opción 1: Oscurecer uniformemente todas las imágenes */
+.idm-service-card {
+    background-color: #6d6b6b;
+    background-blend-mode: multiply;
 }
+
+/* Opción 2: Overlay más fuerte */
+.idm-service-card-header-overlay {
+    background: linear-gradient(180deg,
+        rgba(0, 0, 0, 0.3) 0%,
+        rgba(0, 0, 0, 0.4) 30%,
+        rgba(0, 0, 0, 0.65) 60%,
+        rgba(0, 0, 0, 0.88) 85%,
+        rgba(0, 0, 0, 0.96) 100%);
+}
+
+/* Al hacer hover cambia a rojo */
+.idm-service-card:hover .idm-service-card-header-overlay {
+    background: linear-gradient(180deg,
+        rgba(0, 0, 0, 0.10) 0%,
+        rgba(0, 0, 0, 0.10) 30%,
+        rgba(180, 15, 20, 0.45) 55%,
+        rgba(180, 15, 20, 0.88) 82%,
+        rgba(180, 15, 20, 0.98) 100%);
+}
+
 .idm-service-card:hover .idm-service-card-header {
     transform: scale(1.08);
 }
 
-.idm-service-card:hover .idm-service-card-header-overlay {
-    background: linear-gradient(180deg,
-        rgba(0, 0, 0, 0) 0%,
-        rgba(0, 0, 0, 0.08) 35%,
-        rgba(180, 15, 20, 0.35) 55%,
-        rgba(180, 15, 20, 0.85) 80%,
-        rgba(180, 15, 20, 0.97) 100%);
-}
+
 
 /* ─── Badge ─── */
 .idm-service-card-number {
@@ -2580,10 +2584,23 @@ textarea.idm-form-control {
 }
 
 @media (max-width: 767px) {
+    .container,
+    .container-fluid {
+        padding-left: 20px  !important;
+        padding-right: 20px !important;
+    }
     .idm-gallery-slide { width: 280px; height: 210px; margin-right: 16px; }
     .idm-gallery-marquee::before,
     .idm-gallery-marquee::after { width: 50px; }
     .idm-gallery-track { animation-duration: 35s; }
+}
+
+@media (max-width: 400px) {
+    .container,
+    .container-fluid {
+        padding-left: 16px !important;
+        padding-right: 16px !important;
+    }
 }
 
 /* ─── Sección de servicios internos (bloques) ─── */
@@ -2775,4 +2792,452 @@ textarea.idm-form-control {
 }
 .idm-hero-counter .total {
     color: rgba(60, 60, 60, .6);
+}
+
+/* ══════════════════════════════════════
+   404 PAGE
+══════════════════════════════════════ */
+.idm-404-number {
+    font-family: var(--idm-font-title);
+    font-size: clamp(100px, 20vw, 180px);
+    font-weight: 800;
+    line-height: 1;
+    letter-spacing: -.04em;
+    background: linear-gradient(135deg, #e1161b 0%, #ff5257 50%, #b81115 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    filter: drop-shadow(0 8px 24px rgba(225, 22, 27, .25));
+    animation: pulse404 3s ease-in-out infinite;
+}
+
+@keyframes pulse404 {
+    0%, 100% { filter: drop-shadow(0 8px 24px rgba(225, 22, 27, .25)); }
+    50%      { filter: drop-shadow(0 12px 36px rgba(225, 22, 27, .5)); }
+}
+
+.idm-404-links-title {
+    font-family: var(--idm-font-title);
+    font-size: 13px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: var(--idm-text-light);
+    margin-bottom: 16px;
+}
+
+.idm-404-pill {
+    display: inline-flex;
+    align-items: center;
+    padding: 10px 20px;
+    background: var(--idm-white);
+    border: 1.5px solid var(--idm-border);
+    color: var(--idm-dark);
+    font-size: 13.5px;
+    font-weight: 600;
+    border-radius: 100px;
+    transition: var(--idm-transition);
+    box-shadow: 0 2px 8px rgba(0,0,0,.04);
+}
+.idm-404-pill:hover {
+    background: var(--idm-red);
+    border-color: var(--idm-red);
+    color: var(--idm-white);
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(225, 22, 27, .3);
+}
+
+.idm-btn-outline-dark {
+    background: transparent;
+    color: var(--idm-dark) !important;
+    border: 2px solid var(--idm-dark);
+    font-family: var(--idm-font-title);
+    font-size: 12.5px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    border-radius: 2px;
+    padding: 16px 32px;
+    transition: var(--idm-transition);
+}
+.idm-btn-outline-dark:hover {
+    background: var(--idm-dark);
+    color: var(--idm-white) !important;
+    transform: translateY(-2px);
+    box-shadow: 0 10px 28px rgba(0,0,0,.3);
+}
+
+/* ═══════════════════════════════════════════════════════════
+   RESPONSIVE MOBILE — IDM TÉRMICAS
+   Mejoras completas para móvil y tablet
+   ═══════════════════════════════════════════════════════════ */
+
+/* ── Botón icono contacto en mobile (navbar) ── */
+.idm-nav-mobile-cta {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 !important;
+    font-size: 16px;
+    border-radius: 6px;
+    margin: 0;
+}
+
+/* ── Botón animado contáctanos (desktop) ── */
+.idm-nav-contact {
+    gap: 8px;
+    overflow: hidden;
+    position: relative;
+}
+.idm-nav-contact::after {
+    content: '';
+    position: absolute;
+    top: 0; left: -100%;
+    width: 60%; height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,.2), transparent);
+    transition: left .45s ease;
+}
+.idm-nav-contact:hover::after { left: 150%; }
+.idm-nav-contact-icon { transition: transform .3s ease, opacity .3s ease; flex-shrink: 0; }
+.idm-nav-contact:hover .idm-nav-contact-icon { transform: scale(.8) rotate(-10deg); opacity: .75; }
+.idm-nav-contact-arrow {
+    opacity: 0; transform: translateX(-6px);
+    transition: opacity .3s ease, transform .3s ease; flex-shrink: 0; font-size: 13px;
+}
+.idm-nav-contact:hover .idm-nav-contact-arrow { opacity: 1; transform: translateX(0); }
+.idm-nav-contact-text { transition: letter-spacing .3s ease; }
+.idm-nav-contact:hover .idm-nav-contact-text { letter-spacing: .8px; }
+
+/* ════════════════════════════════════════════
+   MOBILE < 992px  (tablets y phones)
+════════════════════════════════════════════ */
+@media (max-width: 991px) {
+
+    /* ── Topbar ── */
+    .idm-topbar {
+        height: auto;
+        min-height: 42px;
+        padding: 6px 0;
+    }
+
+    /* ── Navbar ── */
+    :root { --idm-navbar-h: 70px; }
+
+    .idm-navbar {
+        height: var(--idm-navbar-h);
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+    }
+
+    .idm-logo { height: 48px; }
+
+    /* ── MENÚ DESPLEGABLE MÓVIL — fondo sólido, no transparente ── */
+    .idm-navbar .navbar-collapse {
+        position: absolute;
+        top: var(--idm-navbar-h);
+        left: 0;
+        right: 0;
+        background: #ffffff;
+        border-top: 3px solid var(--idm-red);
+        border-bottom: 1px solid rgba(0,0,0,.06);
+        box-shadow: 0 12px 32px rgba(0,0,0,.15);
+        padding: 16px 20px 20px;
+        z-index: 999;
+        max-height: calc(100vh - var(--idm-navbar-h));
+        overflow-y: auto;
+    }
+
+    /* Links del menú en mobile */
+    .idm-navbar .nav-link {
+        font-size: 15px;
+        padding: 13px 16px !important;
+        border-radius: 8px;
+        height: auto;
+        border-bottom: 1px solid rgba(0,0,0,.05);
+        display: flex;
+        align-items: center;
+    }
+    .idm-navbar .nav-link:last-child { border-bottom: none; }
+    .idm-navbar .nav-link:hover,
+    .idm-navbar .nav-link.active {
+        background: rgba(225,22,27,.06);
+        color: var(--idm-red) !important;
+        padding-left: 22px !important;
+    }
+
+    /* Dropdown en mobile */
+    .idm-navbar .dropdown-menu {
+        position: static !important;
+        box-shadow: none;
+        border: none;
+        border-top: none;
+        background: rgba(225,22,27,.03);
+        border-radius: 8px;
+        margin: 4px 0 8px 16px;
+        padding: 6px 0;
+        animation: none;
+    }
+    .idm-navbar .dropdown-item {
+        padding: 11px 16px;
+        border-radius: 6px;
+        font-size: 14px;
+    }
+    .idm-navbar .dropdown-item:hover {
+        padding-left: 22px;
+    }
+
+    /* ── Hero principal ── */
+    .idm-hero {
+        height: auto;
+        min-height: 520px;
+    }
+    .idm-hero-content {
+        padding: 50px 0 80px;
+    }
+    .idm-hero-title {
+        font-size: clamp(28px, 7vw, 48px);
+    }
+    .idm-hero-desc {
+        font-size: 14.5px;
+        max-width: 100%;
+    }
+    .idm-hero-btns {
+        flex-direction: column;
+        gap: 10px;
+    }
+    .idm-hero-btns .idm-btn {
+        width: 100%;
+        justify-content: center;
+        text-align: center;
+    }
+    .idm-hero-controls {
+        bottom: 20px;
+        width: calc(100% - 40px);
+        gap: 15px;
+    }
+
+    /* ── Cards de servicios ── */
+    .idm-service-card {
+        min-height: 380px;
+    }
+    .idm-cards-section-wrapper {
+        padding: 50px 0 60px;
+    }
+    .idm-cards-overlap { margin-top: 0; }
+
+    /* ── Secciones generales ── */
+    .idm-section { padding: 60px 0; }
+
+    /* ── Stats ── */
+    .idm-stats {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 20px;
+    }
+    .idm-stat-number { font-size: clamp(28px, 6vw, 40px); }
+
+    /* ── Footer CTA ── */
+    .idm-footer-cta-inner {
+        flex-direction: column;
+        text-align: center;
+        padding: 40px 24px;
+        gap: 20px;
+    }
+    .idm-footer-cta-actions {
+        flex-direction: column;
+        width: 100%;
+    }
+    .idm-footer-cta-actions .idm-btn {
+        width: 100%;
+        justify-content: center;
+    }
+
+    /* ── Formulario ── */
+    .idm-form-wrapper { padding: 32px 24px; }
+
+    /* ── Contacto grid ── */
+    .idm-contact-grid {
+        grid-template-columns: 1fr;
+        gap: 16px;
+    }
+    .idm-contact-card { padding: 28px 20px; }
+
+    /* ── Page Hero ── */
+    section.idm-page-hero {
+        min-height: auto;
+        padding: 100px 0 70px;
+    }
+    section.idm-page-hero .idm-page-title {
+        font-size: clamp(28px, 8vw, 48px);
+    }
+    section.idm-page-hero .idm-page-hero-desc {
+        font-size: 15px;
+    }
+    section.idm-page-hero .idm-page-hero-bg {
+        width: 100%;
+        opacity: .25;
+    }
+    section.idm-page-hero .idm-page-hero-overlay {
+        background: linear-gradient(180deg,
+            rgba(248,249,251,.92) 0%,
+            rgba(248,249,251,.85) 100%) !important;
+    }
+
+    /* ── Noticias ── */
+    .idm-news-layout {
+        grid-template-columns: 1fr;
+        gap: 30px;
+    }
+
+    /* ── Footer ── */
+    .idm-footer-main { padding: 50px 0 36px; }
+    .idm-footer-bottom-inner {
+        flex-direction: column;
+        text-align: center;
+        gap: 10px;
+    }
+    .idm-footer-legal { justify-content: center; flex-wrap: wrap; }
+
+    /* ── Márgenes laterales en mobile ── */
+    .container {
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+
+    /* ── Hero: texto no pegado al borde ── */
+    .idm-hero-content {
+        padding-left: 4px;
+        padding-right: 4px;
+    }
+
+    .idm-hero-title { padding-right: 8px; }
+    .idm-hero-desc  { padding-right: 0; }
+    }
+
+/* ════════════════════════════════════════════
+   PHONE < 576px
+════════════════════════════════════════════ */
+@media (max-width: 575px) {
+
+    :root {
+        --idm-navbar-h: 64px;
+        --idm-topbar-h: 38px;
+    }
+
+    /* ── Topbar ── */
+    .idm-topbar { font-size: 12px; }
+
+    /* ── Logo ── */
+    .idm-logo { height: 40px; }
+
+    /* ── Hero ── */
+    .idm-hero { min-height: 480px; }
+    .idm-hero-content { padding: 40px 0 70px; }
+    .idm-hero-badge {
+        font-size: 9.5px;
+        padding: 7px 14px;
+        letter-spacing: 1.5px;
+    }
+
+    /* ── Cards ── */
+    .idm-service-card { min-height: 340px; border-radius: 12px; }
+    .idm-service-card-title { font-size: 17px; }
+    .idm-service-card-desc { font-size: 13px; }
+    .idm-service-card-body { padding: 24px 22px 22px; }
+
+    /* ── Sección de soluciones ── */
+    .idm-solution-card { padding: 28px 22px; }
+    .idm-solution-title { font-size: 17px; }
+
+    /* ── Stats ── */
+    .idm-stats { grid-template-columns: repeat(3, 1fr); gap: 12px; }
+    .idm-stat-number { font-size: 26px; }
+    .idm-stat-label { font-size: 10px; letter-spacing: 1px; }
+
+    /* ── CTA imagen ── */
+    .idm-cta-img { max-width: 280px; }
+
+    /* ── Page Hero ── */
+    section.idm-page-hero { padding: 90px 0 55px; }
+    section.idm-page-hero .idm-page-title { font-size: clamp(26px, 9vw, 40px); }
+
+    /* ── Service block ── */
+    .idm-service-block { padding: 28px 20px; border-radius: 14px; }
+
+    /* ── Equipment image ── */
+    .idm-equipment-image { aspect-ratio: 4/3; }
+
+    /* ── Footer ── */
+    .idm-footer-brand { padding: 10px 14px; }
+    .idm-footer-logo { height: 36px; }
+    .idm-footer-cta-inner { padding: 32px 16px; }
+    .idm-footer-about { font-size: 13px; }
+
+    /* ── Galería marquee ── */
+    .idm-gallery-slide { width: 260px; height: 195px; }
+
+    /* ── Noticias ── */
+    .idm-news-card-body { padding: 24px 20px; }
+    .idm-news-card-body h2 { font-size: 20px; }
+
+    /* ── Formulario ── */
+    .idm-form-wrapper { padding: 24px 16px; border-radius: 14px; }
+    .idm-form-title { font-size: 22px; }
+
+    /* ── WhatsApp float ── */
+    .idm-whatsapp-float {
+        width: 54px; height: 54px;
+        bottom: 20px; right: 16px;
+        font-size: 26px;
+    }
+
+    /* ── Scroll top ── */
+    .idm-scroll-top {
+        bottom: 20px; left: 16px;
+        width: 42px; height: 42px;
+    }
+
+    /* ── Divider ── */
+    .idm-divider { margin: 32px 0 26px; }
+
+    /* ── H2 ── */
+    .idm-h2 { font-size: clamp(22px, 6vw, 32px); }
+
+    /* ── Lead ── */
+    .idm-lead { font-size: 14.5px; }
+
+    /* ── Eyebrow ── */
+    .idm-eyebrow { font-size: 11px; letter-spacing: 2px; }
+
+    /* ── Container más respirado ── */
+    .container {
+        padding-left: 18px;
+        padding-right: 18px;
+    }
+
+    /* ── Hero badge no se corte ── */
+    .idm-hero-badge {
+        max-width: 90%;
+        white-space: normal;
+        line-height: 1.4;
+    }
+
+    /* ── Textos del hero con margen derecho ── */
+    .idm-hero-title,
+    .idm-hero-desc {
+        padding-right: 6px;
+    }
+}
+
+/* ════════════════════════════════════════════
+   PHONE XS < 380px
+════════════════════════════════════════════ */
+@media (max-width: 379px) {
+    .idm-logo { height: 36px; }
+    .idm-hero-title { font-size: 24px; }
+    .idm-stats { grid-template-columns: repeat(3, 1fr); gap: 8px; }
+    .idm-stat-number { font-size: 22px; }
+    .idm-service-card { min-height: 300px; }
 }
