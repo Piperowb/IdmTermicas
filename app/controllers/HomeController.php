@@ -29,6 +29,7 @@ class HomeController extends Controller
             'metaDesc'   => 'Normativas, equipos y novedades del sector térmico.',
             'activeMenu' => 'noticias',
             'noticia'    => NewsModel::getDestacada(),
+            'noticias'   => NewsModel::getAll(),
         ];
         $this->render('noticias', $data);
     }
@@ -196,5 +197,35 @@ class HomeController extends Controller
             'servicio'   => ServiceModel::getBySlug('diseno'),
         ];
         $this->render('servicio-detalle', $data);
+    }
+
+    public function noticiaDetalle(): void
+    {
+        $uri = $_SERVER['REQUEST_URI'];
+        
+        $partes = explode('/noticias/', $uri);
+        
+        // Tomar el slug
+        $slug = end($partes);
+        
+        $slug = explode('?', $slug)[0];
+        $slug = trim($slug, '/');
+
+        $noticia = NewsModel::getBySlug($slug);
+
+        if (!$noticia) {
+            http_response_code(404);
+            $content = VIEWS_PATH . '/pages/404.php';
+            require_once VIEWS_PATH . '/layout.php';
+            return;
+        }
+
+        $data = [
+            'pageTitle'  => htmlspecialchars($noticia['titulo']) . ' — IDM TÉRMICAS',
+            'metaDesc'   => htmlspecialchars($noticia['resumen'] ?? ''),
+            'activeMenu' => 'noticias',
+            'noticia'    => $noticia,
+        ];
+        $this->render('noticias-detalle', $data);
     }
 }

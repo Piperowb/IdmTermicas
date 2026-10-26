@@ -33,19 +33,25 @@ CREATE TABLE IF NOT EXISTS idm_contactos (
 --    Para gestionar las noticias del sitio desde BD
 --    (actualmente hardcoded en NewsModel)
 -- ────────────────────────────────────────────────────────────
-CREATE TABLE IF NOT EXISTS idm_noticias (
+CREATE TABLE idm_noticias (
     id           INT UNSIGNED    NOT NULL AUTO_INCREMENT,
+    tipo         VARCHAR(20)     NOT NULL DEFAULT 'normativa'
+                                 COMMENT 'normativa | equipo | proyecto',
     titulo       VARCHAR(255)    NOT NULL,
     slug         VARCHAR(255)    NOT NULL UNIQUE,
     resumen      TEXT                NULL,
     cuerpo       LONGTEXT        NOT NULL,
-    imagen       VARCHAR(255)        NULL DEFAULT NULL COMMENT 'Ruta relativa en public/images/',
-    destacada    TINYINT(1)      NOT NULL DEFAULT 0   COMMENT '1=aparece en home',
+    imagen       VARCHAR(255)        NULL COMMENT 'Imagen miniatura / listado',
+    imagen_hero  VARCHAR(255)        NULL COMMENT 'Imagen grande del hero',
+    meta_json    JSON                NULL COMMENT 'Checklist, ficha técnica, etc.',
+    destacada    TINYINT(1)      NOT NULL DEFAULT 0,
     activa       TINYINT(1)      NOT NULL DEFAULT 1,
     created_at   TIMESTAMP       NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    updated_at   TIMESTAMP       NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    updated_at   TIMESTAMP       NOT NULL DEFAULT CURRENT_TIMESTAMP
+                                 ON UPDATE CURRENT_TIMESTAMP,
     PRIMARY KEY  (id),
-    UNIQUE  KEY  uk_slug      (slug),
+    UNIQUE KEY   uk_slug      (slug),
+    INDEX        idx_tipo      (tipo),
     INDEX        idx_destacada (destacada),
     INDEX        idx_activa    (activa)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;

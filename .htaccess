@@ -1,7 +1,7 @@
 Options -Indexes
 RewriteEngine On
 
-# ── 1. Forzar HTTPS (va primero) ──
+# ── 1. Forzar HTTPS ──
 RewriteCond %{HTTPS} off
 RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
 
@@ -12,18 +12,14 @@ RewriteCond %{REQUEST_FILENAME} !-d
 # ── 3. Todo lo demás al front controller ──
 RewriteRule ^(.*)$ index.php [QSA,L]
 
-# ── 4. Redirects 301 desde URLs antiguas de WordPress ──
-Redirect 301 /about-us  /nosotros
-Redirect 301 /about-us/ /nosotros
-
-# ── 5. Seguridad ──
+# ── 4. Seguridad ──
 <IfModule mod_headers.c>
     Header set X-Frame-Options "SAMEORIGIN"
     Header set X-Content-Type-Options "nosniff"
     Header set X-XSS-Protection "1; mode=block"
 </IfModule>
 
-# ── 6. Cache para assets estáticos ──
+# ── 5. Cache para assets estáticos ──
 <FilesMatch "\.(css|js|png|jpg|jpeg|gif|ico|woff2?)$">
     <IfModule mod_expires.c>
         ExpiresActive On

@@ -3,6 +3,7 @@ define('VIEWS_PATH', APP_PATH . '/views');
 define('CONTROLLERS_PATH', APP_PATH . '/controllers');
 define('MODELS_PATH', APP_PATH . '/models');
 
+// ── Sitio ──
 define('SITE_NAME', 'IDM TÉRMICAS');
 define('SITE_URL', 'https://www.idmtermicas.com');
 define('SITE_PHONE', '3206772429');
