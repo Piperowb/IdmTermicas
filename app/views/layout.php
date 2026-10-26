@@ -21,7 +21,7 @@
 <!-- CSS propios -->
 <link rel="stylesheet" href="<?= SITE_URL ?>/public/css/animation.css">
 <link rel="stylesheet" href="<?= SITE_URL ?>/public/css/main.css">
-<link rel="icon" type="image/png" href="<?= SITE_URL ?>/public/images/logoidm2.png">
+<link rel="shortcut icon" href="<?= SITE_URL ?>/public/images/logoidm2.png" type="image/x-icon">
 </head>
 <body>
 
