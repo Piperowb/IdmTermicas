@@ -16,7 +16,6 @@
         <p class="idm-page-hero-desc"><?= htmlspecialchars($servicio['description']) ?></p>
         <nav class="idm-breadcrumb">
             <a href="<?= SITE_URL ?>/">Inicio</a> /
-            <a href="<?= SITE_URL ?>/servicios">Servicios</a> /
             <span><?= htmlspecialchars($servicio['title']) ?></span>
         </nav>
     </div>
