@@ -13,15 +13,17 @@
 <?php endif; ?>
 
 <div class="adm-card">
-    <div class="adm-card-header">
-        <h5 class="adm-card-title">
+    <div class="adm-card-header d-flex justify-content-between align-items-center">
+        
+        <h5 class="adm-card-title m-0">
             <i class="bi bi-newspaper me-2 text-danger"></i>
             Noticias (<?= count($noticias) ?>)
         </h5>
-        <a href="<?= SITE_URL ?>/admin/noticias/crear"
-           class="btn btn-danger btn-sm">
+        
+        <a href="<?= SITE_URL ?>/admin/noticias/crear" class="btn btn-danger btn-sm">
             <i class="bi bi-plus-lg me-1"></i> Nueva noticia
         </a>
+        
     </div>
     <div class="adm-card-body p-0">
         <?php if (empty($noticias)): ?>
