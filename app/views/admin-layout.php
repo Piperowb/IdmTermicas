@@ -102,6 +102,9 @@
             transition: margin-left 0.3s ease-in-out;
         }
         
+        .adm-fields-tipo { display: none; }
+        .adm-fields-tipo.active { display: block; }
+        
         /* Cinta azul con logo (Solo se ve en móvil) */
         .mobile-brand-bar {
             display: none; /* Oculto en PC */
