@@ -218,23 +218,6 @@ $meta      = $noticia['meta'] ?? [];
                                accept="image/jpg,image/jpeg,image/png,image/webp">
                         <small class="text-muted">JPG, PNG o WebP. Máx 5MB.</small>
                     </div>
-
-                    <div class="mb-0">
-                        <label class="form-label fw-semibold">
-                            Imagen hero / grande
-                            <small class="text-muted">(página de detalle)</small>
-                        </label>
-                        <?php if (!empty($noticia['imagen_hero'])): ?>
-                        <div class="mb-2">
-                            <img src="<?= SITE_URL ?>/public/images/<?= htmlspecialchars($noticia['imagen_hero']) ?>"
-                                 style="width:100%;height:120px;object-fit:cover;border-radius:8px;">
-                            <small class="text-muted d-block mt-1">Imagen actual</small>
-                        </div>
-                        <?php endif; ?>
-                        <input type="file" name="imagen_hero" class="form-control"
-                               accept="image/jpg,image/jpeg,image/png,image/webp">
-                        <small class="text-muted">Recomendado: 1200×600px.</small>
-                    </div>
                 </div>
             </div>
 
