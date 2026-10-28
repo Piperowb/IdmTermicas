@@ -9,7 +9,7 @@ define('SITE_URL', 'https://www.idmtermicas.com');
 define('SITE_PHONE', '3206772429');
 define('SITE_PHONE_ALT', '3148617212');
 define('SITE_EMAIL', 'pbocanegra@idmtermicas.com');
-define('SITE_ADDRESS', 'Calle 56 número 4b-145 - Salomia, Cali - Colombia');
+define('SITE_ADDRESS',   'Calle 46b #1F-12 - Barrio Salomia, Cali - Colombia');
 define('SITE_WHATSAPP', '573206772429');
 define('SITE_FACEBOOK', 'https://www.facebook.com/idm.ingenieria');
 define('SITE_INSTAGRAM', 'https://www.instagram.com/idm_termicas');

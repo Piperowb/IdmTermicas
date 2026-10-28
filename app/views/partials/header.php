@@ -11,7 +11,7 @@
                class="idm-topbar-left-item"
                style="color:inherit;text-decoration:none;">
                 <i class="bi bi-geo-alt-fill idm-icon-location"></i>
-                <strong>Cali</strong> Calle 56 número 4b-145
+                <strong>Cali</strong> <?= SITE_ADDRESS ?>
             </a>
         </div>
         <!-- Mobile: teléfono + redes en la misma fila -->
